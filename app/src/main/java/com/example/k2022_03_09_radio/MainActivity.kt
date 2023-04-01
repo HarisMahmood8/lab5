@@ -1,53 +1,46 @@
 package com.example.k2022_03_09_radio
 
-import android.media.AudioAttributes
-import android.media.MediaPlayer
+import com.example.k2022_03_09_radio.RadioAdapter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
-
-var url = "http://stream.whus.org:8000/whusfm"
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var button: Button
-    private lateinit var mediaPlayer: MediaPlayer
-    private var radioOn: Boolean = false
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: RadioAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        button = findViewById(R.id.button)
+        recyclerView = findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
 
-        setUpRadio()
-
-        button.setOnClickListener{
-            if (radioOn) {
-                mediaPlayer.pause()
-                button.setText("Radio On")
-            } else {
-                mediaPlayer.start()
-                button.setText("Radio Off")
-            }
-            radioOn = ! radioOn
-        }
-
-
+        adapter = RadioAdapter(getRadios())
+        recyclerView.adapter = adapter
     }
 
-    private fun setUpRadio() {
-        mediaPlayer = MediaPlayer().apply {
-            setAudioAttributes(
-                AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                    .setUsage(AudioAttributes.USAGE_MEDIA)
-                    .build()
-            )
-            setDataSource(url)
-            prepare()
-        }
-    }
+    private fun getRadios(): ArrayList<Radio> {
+        val radios = ArrayList<Radio>()
 
+        radios.add(Radio("Radio 1: Jazz24", "http://icecast.omroep.nl/radio2-bb-mp3"))
+        radios.add(Radio("Radio 2: WNYC-FM", "http://fm939.wnyc.org/wnycfm"))
+        radios.add(Radio("Radio 3: KEXP-FM", "https://live-aacplus-64.kexp.org/kexp64.aac"))
+        radios.add(Radio("Radio 4:BBC RADIO 1", "http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1_mf_p"))
+        radios.add(Radio("Radio 5: Absolute Radio 80s", "http://icy-e-bab-06-cr.sharp-stream.com/absoluteradio80s.mp3"))
+        radios.add(Radio("Radio 6: KUTX", "https://kutx.org/wp-content/uploads/2018/08/KUTX-989-2.mp3"))
+        radios.add(Radio("Radio 7: The Current", "https://current.stream.publicradio.org/kcmp.mp3"))
+        radios.add(Radio("Radio 8: CBC Radio One", "http://cbc_r1_tor.akacast.akamaistream.net/7/469/451661/v1/rc.akacast.akamaistream.net/cbc_r1_tor"))
+        radios.add(Radio("Radio 9: NPR News", "https://npr-ice.streamguys1.com/live.mp3"))
+        radios.add(Radio("Radio 10: KCRW", "https://kcrw.streamguys1.com/kcrw_192k_mp3_on_air"))
+
+        return radios
+    }
 }
+
+
+
+
+
