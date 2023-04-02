@@ -2,20 +2,46 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:padding="16dp">
-
+    android:padding="12dp"
+    android:background="#FFFFFF">
+    <View
+        android:id="@+id/radioColor"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="8dp"
+        android:background="#000000"
+        android:gravity="center"
+        android:visibility="visible"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="0dp"/>
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:background="#FFC107"/>
 
     <TextView
         android:id="@+id/tvFrequency"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:background="@color/teal_700"/>
 
+    <View
+        android:id="@+id/radio2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="8dp"
+        android:background="#000000"
+        android:gravity="center"
+        android:visibility="visible"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="0dp"/>
 </LinearLayout>
