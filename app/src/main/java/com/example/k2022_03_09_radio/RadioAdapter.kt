@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class RadioAdapter(private val radios: ArrayList<Radio>) :
     RecyclerView.Adapter<RadioAdapter.RadioViewHolder>() {
-
+    private var selectedRadioPosition = -1
     private var selectedRadio: MediaPlayer? = null
 
     inner class RadioViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -31,25 +31,37 @@ class RadioAdapter(private val radios: ArrayList<Radio>) :
         holder.streamUrl.text = radio.streamUrl
 
         holder.itemView.setOnClickListener {
-            if (selectedRadio != null && selectedRadio!!.isPlaying) {
-                selectedRadio!!.stop()
-            }
+            if (selectedRadioPosition == holder.adapterPosition) {
+                if (selectedRadio != null && selectedRadio!!.isPlaying) {
+                    selectedRadio!!.stop()
+                }
+                selectedRadio = null
+                selectedRadioPosition = RecyclerView.NO_POSITION
+            } else {
+                if (selectedRadio != null && selectedRadio!!.isPlaying) {
+                    selectedRadio!!.stop()
+                }
 
-            selectedRadio = MediaPlayer()
-            selectedRadio!!.setAudioAttributes(
-                AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                    .setUsage(AudioAttributes.USAGE_MEDIA)
-                    .build()
-            )
-            selectedRadio!!.setDataSource(radio.streamUrl)
-            selectedRadio!!.prepareAsync()
+                selectedRadio = MediaPlayer()
+                selectedRadio!!.setAudioAttributes(
+                    AudioAttributes.Builder()
+                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                        .setUsage(AudioAttributes.USAGE_MEDIA)
+                        .build()
+                )
+                selectedRadio!!.setDataSource(radio.streamUrl)
+                selectedRadio!!.prepareAsync()
 
-            selectedRadio!!.setOnPreparedListener {
-                selectedRadio!!.start()
+                selectedRadio!!.setOnPreparedListener {
+                    selectedRadio!!.start()
+                }
+
+                selectedRadioPosition = holder.adapterPosition
             }
         }
     }
+
+
 
     override fun getItemCount(): Int {
         return radios.size
