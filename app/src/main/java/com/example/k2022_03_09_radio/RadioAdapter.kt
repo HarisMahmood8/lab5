@@ -5,6 +5,7 @@ import android.media.MediaPlayer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
@@ -12,11 +13,25 @@ class RadioAdapter(private val radios: ArrayList<Radio>) :
     RecyclerView.Adapter<RadioAdapter.RadioViewHolder>() {
     private var selectedRadioPosition = -1
     private var selectedRadio: MediaPlayer? = null
+    private val radioImages = arrayListOf(
+        R.drawable.radio1,
+        R.drawable.radio2,
+        R.drawable.radio3,
+        R.drawable.radio4,
+        R.drawable.radio5,
+        R.drawable.radio6,
+        R.drawable.radio7,
+        R.drawable.radio8,
+        R.drawable.radio9,
+        R.drawable.radio10
+    )
 
     inner class RadioViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val name: TextView = itemView.findViewById(R.id.tvTitle)
         val streamUrl: TextView = itemView.findViewById(R.id.tvFrequency)
+        val imageView: ImageView = itemView.findViewById(R.id.ivRadio)
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RadioViewHolder {
         val itemView =
@@ -29,6 +44,22 @@ class RadioAdapter(private val radios: ArrayList<Radio>) :
 
         holder.name.text = radio.name
         holder.streamUrl.text = radio.streamUrl
+
+        val imageResource = when (radio.name) {
+            "Radio 1: Jazz24" -> R.drawable.radio1
+            "Radio 2: WNYC-FM" -> R.drawable.radio2
+            "Radio 3: HEART FM" -> R.drawable.radio3
+            "Radio 4: Smooth Radio" -> R.drawable.radio4
+            "Radio 5: TalkSPORT" -> R.drawable.radio5
+            "Radio 6: Radio Paradise" -> R.drawable.radio6
+            "Radio 7: The Current" -> R.drawable.radio7
+            "Radio 8: Awesome 80s" -> R.drawable.radio8
+            "Radio 9: Capital XTRA" -> R.drawable.radio9
+            "Radio 10: KCRW" -> R.drawable.radio10
+            else -> R.drawable.radio1
+        }
+
+        holder.imageView.setImageResource(imageResource)
 
         holder.itemView.setOnClickListener {
             if (selectedRadioPosition == holder.adapterPosition) {
