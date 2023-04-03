@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 
 class RadioAdapter(private val radios: ArrayList<Radio>) :
@@ -65,6 +66,11 @@ class RadioAdapter(private val radios: ArrayList<Radio>) :
             if (selectedRadioPosition == holder.adapterPosition) {
                 if (selectedRadio != null && selectedRadio!!.isPlaying) {
                     selectedRadio!!.stop()
+                    Toast.makeText(
+                        holder.itemView.context,
+                        "${radio.name} stopped",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
                 selectedRadio = null
                 selectedRadioPosition = RecyclerView.NO_POSITION
@@ -81,16 +87,27 @@ class RadioAdapter(private val radios: ArrayList<Radio>) :
                         .build()
                 )
                 selectedRadio!!.setDataSource(radio.streamUrl)
-                selectedRadio!!.prepareAsync()
-
                 selectedRadio!!.setOnPreparedListener {
-                    selectedRadio!!.start()
+                    it.start()
+                    Toast.makeText(
+                        holder.itemView.context,
+                        "${radio.name} started",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
-
+                selectedRadio!!.setOnCompletionListener {
+                    Toast.makeText(
+                        holder.itemView.context,
+                        "${radio.name} stopped",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                selectedRadio!!.prepareAsync()
                 selectedRadioPosition = holder.adapterPosition
             }
         }
     }
+
 
 
 

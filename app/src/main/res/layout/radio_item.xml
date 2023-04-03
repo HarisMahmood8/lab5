@@ -3,16 +3,22 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
-    android:padding="12dp"
+    android:orientation="vertical"
+    android:padding="0dp"
     android:background="#FFFFFF">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#000000"/>
 
     <ImageView
         android:id="@+id/ivRadio"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginEnd="8dp"
-        android:src="@drawable/radio1" />
+        android:src="@drawable/radio1"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,6 +31,7 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:textStyle="bold"
+            android:background="@color/teal_700"
             android:text="Radio 1: Jazz24"/>
 
         <TextView
@@ -32,8 +39,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="12sp"
+            android:background="#FFC107"
             android:text="http://icecast.omroep.nl/radio2-bb-mp3" />
 
     </LinearLayout>
 
+
 </LinearLayout>
+
